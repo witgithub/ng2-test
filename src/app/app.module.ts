@@ -5,14 +5,18 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
+import { TaskListModule } from './task-list/task-list.module';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    TaskListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
