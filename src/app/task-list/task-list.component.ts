@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
+import { TaskListService } from './task-list.service';
+
 
 @Component({
   selector: 'app-task-list',
@@ -6,20 +8,41 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   host: {
     class: 'task-list'
   },
+  providers: [TaskListService],
   styleUrls: ['./task-list.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class TaskListComponent implements OnInit {
-  tasks:Array<any>;
+  tasks: Array<any>;
+  selectedTaskFilter;
+  taskFilterList;
+  taskListService;
 
-  constructor() {
-    this.tasks = [
-      {title: 'zadanie1', done: false},
-      {title: 'zadanie2', done: true}
-    ]
-   }
+  constructor(@Inject(TaskListService) taskListService) {
+    this.taskListService = taskListService;
+    this.taskFilterList = ['wszystkie', 'otwarte', 'wykonane'];
+    this.selectedTaskFilter = 'wszystkie';
+  }
 
   ngOnInit() {
+  }
+
+  getFilteredTasks() {
+    return this.taskListService.tasks ? this.taskListService.tasks.filter((task) => {
+      if (this.selectedTaskFilter === 'wszystkie') {
+        return true;
+      } else if (this.selectedTaskFilter === 'otwarte') {
+        return !task.done;
+      } else {
+        return task.done;
+      }
+    }) : [];
+  }
+
+  addTask(title) {
+    this.taskListService.tasks.push({
+      title, done: false
+    });
   }
 
 }

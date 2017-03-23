@@ -1,5 +1,15 @@
-<p>
-  task-list works!
-</p>
-<app-task *ngFor="let task of tasks" class="task" [task]="task">
-</app-task> 
+<div class="task-list__l-container">
+  <div class="task-list__l-box-a">
+    <app-toggle [buttonList]="taskFilterList"
+                [(selectedButton)]="selectedTaskFilter"></app-toggle>
+  </div>
+    <div class="task-list__l-box-b">
+      <app-enter-task (taskEntered)="addTask($event)"></app-enter-task>
+    </div>
+  <div class="task-list__l-box-c">
+    <div class="task-list__tasks">
+        <app-task *ngFor="let task of getFilteredTasks()" [task]="task">
+        </app-task>
+    </div>
+  </div>
+</div>

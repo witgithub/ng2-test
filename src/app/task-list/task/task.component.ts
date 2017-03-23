@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-task',
@@ -16,6 +16,11 @@ export class TaskComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  @HostBinding('class.task--done')
+  get done(){
+    return this.task && this.task.done;
   }
 
 }
